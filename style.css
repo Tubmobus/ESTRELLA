@@ -1,0 +1,1222 @@
+/* ============================================================
+   ESTERELLA — style.css
+   ============================================================
+
+   FILE STRUCTURE (use Ctrl+F to jump to any section):
+   ─────────────────────────────────────────────────────
+   1.  CSS CUSTOM PROPERTIES (change colors/fonts here)
+   2.  RESET & BASE
+   3.  TYPOGRAPHY UTILITIES
+   4.  BUTTONS
+   5.  NAVIGATION
+   6.  HERO SECTION  ← 📸 HERO BACKGROUND IMAGE IS HERE
+   7.  MARQUEE STRIP
+   8.  COLLECTIONS GRID
+   9.  ABOUT SECTION
+   10. PULL QUOTE
+   11. LOOKBOOK
+   12. PRESS STRIP
+   13. CONTACT / EMAIL
+   14. FOOTER
+   15. ANIMATIONS
+   16. RESPONSIVE (mobile styles)
+   ─────────────────────────────────────────────────────
+*/
+
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES
+   ============================================================
+   These are your "design tokens" — change a value here and
+   it updates everywhere on the page automatically.
+
+   HOW TO CHANGE THE COLOR SCHEME:
+   Edit any hex value below. Save → Live Server refreshes.
+
+   HOW TO CHANGE FONTS:
+   1. Go to fonts.google.com, pick a font, copy its @import link
+   2. Replace the <link> in index.html
+   3. Update --font-display or --font-body below
+============================================================ */
+:root {
+  /* ── COLORS ──────────────────────────────────────────── */
+  --color-bg:         #f7f5f2;   /* Main page background (warm off-white) */
+  --color-bg-alt:     #edeae4;   /* Slightly darker bg for alternate sections */
+  --color-bg-dark:    #1c1c1a;   /* Dark background (used in hero overlay etc.) */
+  --color-ink:        #1c1c1a;   /* Primary text color */
+  --color-ink-muted:  #7a7672;   /* Secondary / subdued text */
+  --color-accent:     #b8a08a;   /* Warm sand/taupe accent color */
+  --color-border:     #d8d3cc;   /* Subtle divider lines */
+
+  /* ── FONTS ───────────────────────────────────────────── */
+  --font-display: 'Cormorant Garamond', Georgia, serif; /* headlines */
+  --font-body:    'Jost', sans-serif;                   /* body, labels, buttons */
+
+  /* ── SPACING ─────────────────────────────────────────── */
+  /* Use these multiples to keep vertical rhythm consistent */
+  --space-xs:  0.5rem;   /*  8px */
+  --space-sm:  1rem;     /* 16px */
+  --space-md:  2rem;     /* 32px */
+  --space-lg:  4rem;     /* 64px */
+  --space-xl:  7rem;     /* 112px — section top/bottom padding */
+  --space-2xl: 10rem;    /* 160px */
+
+  /* ── TRANSITIONS ─────────────────────────────────────── */
+  --ease:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --duration: 0.35s;
+}
+
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================
+   Removes browser default margins/padding so we start clean.
+   You rarely need to edit this section.
+============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth; /* smooth scroll when clicking nav links */
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* images always fill their container without distorting */
+  object-position: center top; /* show top of image (keeps faces visible) */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul { list-style: none; }
+
+
+/* ============================================================
+   3. TYPOGRAPHY UTILITIES
+   ============================================================
+   Reusable text styles used in section headers across the page.
+============================================================ */
+
+/* Small all-caps label above section titles */
+.section-eyebrow {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: var(--space-xs);
+}
+
+/* Big section headline */
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 4rem); /* scales with screen size */
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+/* Subtitle below section headline */
+.section-sub {
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-muted);
+  margin-top: var(--space-xs);
+}
+
+/* Section header block (eyebrow + title + sub stacked) */
+.section-header {
+  margin-bottom: var(--space-lg);
+}
+
+.section-header--centered {
+  text-align: center;
+}
+
+
+/* ============================================================
+   4. BUTTONS
+   ============================================================
+   Three button styles: solid, outline, ghost (for dark backgrounds).
+
+   HOW TO CHANGE BUTTON COLOR:
+   Edit background and border-color in .btn below.
+============================================================ */
+
+/* Solid dark button */
+.btn {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  border: 1px solid var(--color-ink);
+  cursor: pointer;
+  transition:
+    background  var(--duration) var(--ease),
+    color       var(--duration) var(--ease),
+    border-color var(--duration) var(--ease);
+}
+
+.btn:hover {
+  background: transparent;
+  color: var(--color-ink);
+}
+
+/* Outline button (transparent, dark border) */
+.btn--outline {
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.btn--outline:hover {
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+
+/* Ghost button for use on dark backgrounds (hero, lookbook) */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-bg);
+  border-color: rgba(247, 245, 242, 0.5);
+}
+
+.btn--ghost:hover {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  border-color: var(--color-bg);
+}
+
+/* Ghost dark — for use on semi-dark overlays */
+.btn--ghost-dark {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255,255,255,0.6);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  padding: 0.7rem 1.6rem;
+}
+
+.btn--ghost-dark:hover {
+  background: #fff;
+  color: var(--color-ink);
+}
+
+
+/* ============================================================
+   5. NAVIGATION
+   ============================================================
+   Fixed top bar. Starts transparent, gains frosted glass
+   background after scroll (JS adds .scrolled class).
+
+   HOW TO CHANGE NAV STYLE:
+   • Text color: edit color in .nav__left a / .nav__right a
+   • Logo size: edit font-size in .nav__logo
+   • Background on scroll: edit rgba() in .nav.scrolled
+============================================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.6rem 3.5rem;
+  transition:
+    background    var(--duration) var(--ease),
+    box-shadow    var(--duration) var(--ease),
+    padding       var(--duration) var(--ease);
+}
+
+/* Frosted glass — added by JS after 60px scroll */
+.nav.scrolled {
+  background: rgba(247, 245, 242, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--color-border);
+  padding: 1.1rem 3.5rem;
+}
+
+/* Brand name in the center */
+.nav__logo {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-ink);
+  transition: opacity var(--duration);
+}
+
+.nav__logo:hover { opacity: 0.6; }
+
+.nav__left,
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.nav__left a,
+.nav__right a {
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  opacity: 0.65;
+  transition: opacity var(--duration);
+}
+
+.nav__left a:hover,
+.nav__right a:hover { opacity: 1; }
+
+/* Shopping bag icon */
+.nav__bag {
+  opacity: 0.65;
+  transition: opacity var(--duration);
+  display: flex;
+  align-items: center;
+}
+
+.nav__bag:hover { opacity: 1; }
+
+
+/* ============================================================
+   6. HERO SECTION
+   ============================================================
+
+   📸 ── HERO BACKGROUND IMAGE ──────────────────────────────
+   Change the url() below to your hero photo file name.
+   Example: url('images/my-hero.jpg')
+
+   The overlay above the image controls how dark/light the
+   photo appears. Edit .hero__overlay opacity to adjust.
+   Current: 0.45 = slightly dark so text is readable.
+   ─────────────────────────────────────────────────────────
+
+   HOW TO CHANGE HERO HEIGHT:
+   Edit min-height: 100svh below. 80vh = 80% of screen height.
+============================================================ */
+.hero {
+  position: relative;
+  min-height: 100svh; /* 100svh = full screen, accounts for mobile browser bars */
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-2xl) 10vw var(--space-xl);
+  overflow: hidden;
+
+  /* ── 📸 HERO BACKGROUND IMAGE — CHANGE THIS LINE ────── */
+  background-image: url('images/hero.jpg');
+  /* ──────────────────────────────────────────────────── */
+
+  background-size: cover;
+  background-position: center top; /* shows the top of the image (faces, etc.) */
+  background-repeat: no-repeat;
+  background-color: var(--color-bg-alt); /* fallback if image hasn't loaded yet */
+}
+
+/* Semi-transparent overlay on top of the hero photo
+   Increase opacity (e.g. 0.6) to make it darker,
+   decrease (e.g. 0.2) to show more of the photo. */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 28, 26, 0.42);
+  z-index: 1;
+}
+
+/* Hero text container */
+.hero__content {
+  position: relative;
+  z-index: 2; /* sits above the overlay */
+  max-width: 640px;
+  animation: fadeUp 1.1s var(--ease) both;
+}
+
+.hero__eyebrow {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(247, 245, 242, 0.7);
+  margin-bottom: var(--space-sm);
+}
+
+/* Main headline */
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 9vw, 8.5rem);
+  font-weight: 300;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin-bottom: var(--space-md);
+}
+
+/* Italic accent word in headline */
+.hero__title em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.hero__sub {
+  font-size: 0.82rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(247, 245, 242, 0.65);
+  line-height: 1.9;
+  margin-bottom: var(--space-lg);
+}
+
+.hero__actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+/* Thin vertical line decoration — bottom right */
+.hero__line {
+  position: absolute;
+  z-index: 2;
+  right: 10vw;
+  bottom: var(--space-xl);
+  width: 1px;
+  height: 100px;
+  background: rgba(247, 245, 242, 0.3);
+}
+
+/* Scroll indicator — bottom left */
+.hero__scroll {
+  position: absolute;
+  z-index: 2;
+  left: 10vw;
+  bottom: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero__scroll span {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(247, 245, 242, 0.5);
+  writing-mode: vertical-rl;
+}
+
+.hero__scroll-line {
+  width: 1px;
+  height: 60px;
+  background: rgba(247, 245, 242, 0.3);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleY(1); opacity: 0.3; }
+  50%       { transform: scaleY(0.5); opacity: 0.7; }
+}
+
+
+/* ============================================================
+   7. MARQUEE TICKER STRIP
+   ============================================================
+   Horizontal scrolling text between sections.
+   To change speed: edit animation duration (currently 32s).
+   Shorter = faster, longer = slower.
+============================================================ */
+.marquee {
+  overflow: hidden;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 1rem 0;
+  background: var(--color-bg);
+}
+
+.marquee__track {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 32s linear infinite;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+
+/* ============================================================
+   8. COLLECTIONS / PRODUCT GRID
+   ============================================================
+   3-column responsive grid. Featured cards (.card--featured)
+   are taller. Hover reveals a "Quick View" label.
+
+   HOW TO CHANGE THE NUMBER OF COLUMNS:
+   Edit grid-template-columns below.
+   "1fr 1.4fr 1fr" = 3 unequal columns.
+   "1fr 1fr 1fr" = 3 equal columns.
+   "1fr 1fr" = 2 columns.
+============================================================ */
+.collections {
+  padding: var(--space-xl) 8vw;
+}
+
+/* The 3-column grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: 1.5rem;
+  align-items: start; /* cards start at the top, different heights are fine */
+}
+
+/* ── Individual Product Card ── */
+.card {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+/* Image container — controls the aspect ratio of the photo box */
+.card__img-wrap {
+  position: relative;
+  aspect-ratio: 3 / 4;       /* portrait ratio — change to 1/1 for square */
+  overflow: hidden;
+  background: var(--color-bg-alt); /* shown while image loads */
+}
+
+/* Grey placeholder shown when image is missing (onerror fallback) */
+.card__img-wrap--empty {
+  background: linear-gradient(160deg, #ddd8d0 0%, #c5bfb7 100%) !important;
+}
+
+/* The actual image — object-fit: cover fills the box */
+.card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.7s var(--ease);
+}
+
+/* Subtle zoom on card hover */
+.card:hover .card__img {
+  transform: scale(1.04);
+}
+
+/* "New", "Bestseller" etc. tag top-left */
+.card__tag {
+  position: absolute;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  z-index: 1;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  padding: 0.3rem 0.7rem;
+}
+
+/* Dark variant tag */
+.card__tag--dark {
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+
+/* "Quick View" label that appears on hover */
+.card__hover-label {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  z-index: 1;
+  text-align: center;
+  padding: var(--space-sm);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: rgba(28, 28, 26, 0.75);
+  color: #fff;
+  transform: translateY(100%);
+  transition: transform 0.3s var(--ease);
+}
+
+.card:hover .card__hover-label {
+  transform: translateY(0);
+}
+
+/* Product info below the image */
+.card__body {
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.card__name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.card__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+
+.card__price {
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--color-ink);
+}
+
+.card__sizes {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--color-ink-muted);
+  text-transform: uppercase;
+}
+
+/* "View piece →" link — only visible on hover */
+.card__link {
+  display: inline-block;
+  margin-top: 0.7rem;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-ink);
+  padding-bottom: 0.15rem;
+  opacity: 0;
+  transition: opacity var(--duration);
+}
+
+.card:hover .card__link { opacity: 1; }
+
+/* Featured card — aspect ratio taller than regular cards */
+.card--featured .card__img-wrap {
+  aspect-ratio: 3 / 5;
+}
+
+/* "View all" CTA below the grid */
+.collections__cta {
+  text-align: center;
+  margin-top: var(--space-lg);
+}
+
+
+/* ============================================================
+   9. ABOUT SECTION
+   ============================================================
+   Two columns: left = photo, right = text.
+
+   HOW TO CHANGE THE COLUMN SPLIT:
+   Edit grid-template-columns. "1fr 1.1fr" = slightly wider text.
+
+   📸 The image is in index.html as <img src="images/about.jpg">
+============================================================ */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  min-height: 85vh;
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Left: image panel */
+.about__img-panel {
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+  background: var(--color-bg-alt); /* fallback while image loads */
+}
+
+/* Grey placeholder when about image is missing */
+.about__img-panel--empty {
+  background: linear-gradient(170deg, #d1cbc3 0%, #bab4ac 100%) !important;
+}
+
+.about__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* "Est. 2020" label overlaid on the image */
+.about__img-label {
+  position: absolute;
+  bottom: var(--space-md);
+  left: var(--space-md);
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(247, 245, 242, 0.8);
+  background: rgba(28, 28, 26, 0.4);
+  padding: 0.4rem 0.9rem;
+  backdrop-filter: blur(4px);
+}
+
+/* Right: text panel */
+.about__text {
+  padding: var(--space-xl) var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: var(--space-md);
+}
+
+.about__title em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.about__body {
+  font-size: 0.95rem;
+  color: var(--color-ink-muted);
+  max-width: 440px;
+  margin-bottom: var(--space-sm);
+  line-height: 1.85;
+}
+
+/* Brand stats row */
+.about__stats {
+  display: flex;
+  gap: var(--space-lg);
+  margin: var(--space-lg) 0;
+  padding: var(--space-md) 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.about__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.about__stat strong {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.about__stat span {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+
+/* ============================================================
+   10. PULL QUOTE
+   ============================================================
+   Full-width text break between sections.
+============================================================ */
+.quote-section {
+  padding: var(--space-xl) 10vw;
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+}
+
+.pull-quote {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--color-ink);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.pull-quote__attr {
+  margin-top: var(--space-sm);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+
+/* ============================================================
+   11. LOOKBOOK SECTION
+   ============================================================
+   CSS Grid layout for the 4 lookbook photos.
+   The grid is defined so:
+   • cell-1 (top-left tall)
+   • cell-2 (center wide, spans 2 rows)
+   • cell-3 (top-right tall)
+   • cell-4 (bottom full-width)
+
+   HOW TO CHANGE IMAGE HEIGHTS:
+   Edit the height values on .lookbook__cell--1/2/3/4.
+
+   📸 Images are in index.html as <img src="images/lookbook-X.jpg">
+============================================================ */
+.lookbook {
+  padding: var(--space-xl) 0 0;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+/* 3 columns, images sit flush edge-to-edge */
+.lookbook__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  grid-template-rows: 65vh 45vh;
+  gap: 3px;
+  margin-top: var(--space-lg);
+}
+
+/* Grey placeholder when lookbook image is missing */
+.lookbook__cell--empty {
+  background: linear-gradient(170deg, #ccc7bf 0%, #aaa49c 100%) !important;
+}
+
+.lookbook__cell {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg-alt);
+}
+
+/* Hover slight zoom on lookbook images */
+.lookbook__cell .lookbook__img {
+  transition: transform 0.8s var(--ease);
+}
+
+.lookbook__cell:hover .lookbook__img {
+  transform: scale(1.04);
+}
+
+/* cell-1: top-left (row 1, column 1) */
+.lookbook__cell--1 {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* cell-2: center (row 1, column 2 — spans both rows on its column) */
+.lookbook__cell--2 {
+  grid-column: 2;
+  grid-row: 1 / 2;
+}
+
+/* cell-3: top-right (row 1, column 3) */
+.lookbook__cell--3 {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+/* cell-4: full-width bottom banner (row 2, all 3 columns) */
+.lookbook__cell--4 {
+  grid-column: 1 / -1; /* spans all 3 columns */
+  grid-row: 2;
+}
+
+/* Overlay label on center lookbook panel */
+.lookbook__label {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  background: rgba(28, 28, 26, 0.28);
+}
+
+.lookbook__label-sub {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+.lookbook__label-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+
+/* ============================================================
+   12. PRESS STRIP
+   ============================================================
+   "As seen in" publication names or logos.
+============================================================ */
+.press {
+  padding: var(--space-lg) 8vw;
+  text-align: center;
+  border-top: 1px solid var(--color-border);
+}
+
+.press__label {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-md);
+}
+
+.press__logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3.5rem;
+  flex-wrap: wrap;
+}
+
+.press__logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--color-border); /* muted — looks like a greyed-out logo */
+  transition: color var(--duration);
+}
+
+.press__logo:hover { color: var(--color-ink); }
+
+/* If you add real logo images, style them here */
+.press__logo-img {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  filter: grayscale(1) opacity(0.4);
+  transition: filter var(--duration);
+}
+
+.press__logo-img:hover { filter: grayscale(0) opacity(1); }
+
+
+/* ============================================================
+   13. CONTACT / EMAIL SECTION
+   ============================================================
+   Newsletter sign-up form.
+============================================================ */
+.contact {
+  padding: var(--space-xl) 10vw;
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+}
+
+.contact__inner {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: var(--space-xs);
+}
+
+.contact__sub {
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: var(--color-ink-muted);
+  margin-bottom: var(--space-lg);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact__form {
+  display: flex;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.contact__input {
+  flex: 1;
+  padding: 0.9rem 1.3rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 300;
+  border: 1px solid var(--color-border);
+  border-right: none; /* button is flush against the input */
+  background: transparent;
+  color: var(--color-ink);
+  outline: none;
+  transition: border-color var(--duration);
+}
+
+.contact__input:focus { border-color: var(--color-ink); }
+
+.contact__input::placeholder { color: var(--color-ink-muted); }
+
+/* Success message after form submit */
+.contact__confirm {
+  margin-top: var(--space-sm);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  min-height: 1.4em;
+}
+
+
+/* ============================================================
+   14. FOOTER
+   ============================================================
+============================================================ */
+.footer {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.footer__top {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 0.7fr;
+  gap: var(--space-xl);
+  padding: var(--space-xl) 8vw var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.footer__logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.footer__tagline {
+  font-size: 0.78rem;
+  color: var(--color-ink-muted);
+  line-height: 1.7;
+  max-width: 220px;
+}
+
+/* Footer nav columns */
+.footer__nav {
+  display: flex;
+  gap: var(--space-xl);
+}
+
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.footer__col strong {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  margin-bottom: 0.3rem;
+}
+
+.footer__col a {
+  font-size: 0.78rem;
+  color: var(--color-ink-muted);
+  transition: color var(--duration);
+  line-height: 1;
+}
+
+.footer__col a:hover { color: var(--color-ink); }
+
+/* Social links column */
+.footer__social {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.footer__social strong {
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.footer__social a {
+  font-size: 0.78rem;
+  color: var(--color-ink-muted);
+  transition: color var(--duration);
+}
+
+.footer__social a:hover { color: var(--color-ink); }
+
+/* Bottom bar with copyright */
+.footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.4rem 8vw;
+  font-size: 0.68rem;
+  color: var(--color-ink-muted);
+  letter-spacing: 0.05em;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer__legal {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer__legal a {
+  color: var(--color-ink-muted);
+  transition: color var(--duration);
+}
+
+.footer__legal a:hover { color: var(--color-ink); }
+
+
+/* ============================================================
+   15. ANIMATIONS
+   ============================================================
+   .reveal = hidden by default.
+   JS (main.js) adds .visible when element enters the viewport.
+
+   HOW TO CHANGE ANIMATION SPEED: edit transition duration below.
+   HOW TO CHANGE ANIMATION DIRECTION: edit transform (e.g. translateX).
+============================================================ */
+
+/* Page-load animation for hero content */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll-reveal: elements start invisible and slightly below */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity   0.75s var(--ease),
+    transform 0.75s var(--ease);
+}
+
+/* JS adds this class when element is visible on screen */
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   16. RESPONSIVE — MOBILE STYLES
+   ============================================================
+   Everything below here only applies on screens ≤ 900px wide.
+   The desktop styles above apply on wider screens.
+============================================================ */
+@media (max-width: 900px) {
+
+  /* ── Nav ── */
+  .nav { padding: 1.2rem 1.5rem; }
+  .nav.scrolled { padding: 1rem 1.5rem; }
+  .nav__left, .nav__right { display: none; } /* hide links on mobile */
+  .nav__logo { position: static; transform: none; }
+
+  /* ── Hero ── */
+  .hero { padding: 8rem 6vw 5rem; align-items: flex-start; }
+  .hero__title { font-size: clamp(3rem, 14vw, 5rem); }
+  .hero__actions { flex-direction: column; align-items: flex-start; }
+  .hero__line, .hero__scroll { display: none; }
+
+  /* ── Collections grid → single column ── */
+  .grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .card--featured .card__img-wrap { aspect-ratio: 3 / 4; }
+  .collections { padding: var(--space-lg) 6vw; }
+
+  /* ── About → stacked ── */
+  .about {
+    grid-template-columns: 1fr;
+  }
+  .about__img-panel { min-height: 70vw; }
+  .about__text { padding: var(--space-lg) 6vw; }
+  .about__stats { flex-wrap: wrap; gap: var(--space-md); }
+
+  /* ── Lookbook → stacked ── */
+  .lookbook__grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  .lookbook__cell--4 {
+    grid-column: 1 / -1;
+    height: 55vw;
+  }
+
+  /* ── Press ── */
+  .press__logos { gap: 2rem; }
+  .press__logo  { font-size: 1.1rem; }
+
+  /* ── Contact ── */
+  .contact { padding: var(--space-lg) 6vw; }
+  .contact__form { flex-direction: column; }
+  .contact__input {
+    border-right: 1px solid var(--color-border);
+    border-bottom: none;
+  }
+
+  /* ── Footer ── */
+  .footer__top {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+    padding: var(--space-lg) 6vw;
+  }
+  .footer__nav { flex-wrap: wrap; gap: var(--space-lg); }
+  .footer__bottom { padding: 1.2rem 6vw; }
+}

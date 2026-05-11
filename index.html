@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESTRELLA</title>
+
+  <!--
+  ================================================================
+  HOW TO USE THIS FILE IN VS CODE WITH LIVE SERVER
+  ================================================================
+
+  STEP 1 — FOLDER STRUCTURE
+  --------------------------
+  Your project folder must look exactly like this:
+
+    estrella/
+      ├── index.html         ← this file
+      ├── style.css          ← all the design & layout
+      ├── main.js            ← scroll effects & interactions
+      └── images/            ← DROP ALL YOUR PHOTOS IN HERE
+            ├── hero.jpg
+            ├── card-1.jpg
+            ├── card-2.jpg
+            ├── card-3.jpg
+            ├── card-4.jpg
+            ├── card-5.jpg
+            ├── card-6.jpg
+            ├── lookbook-1.jpg
+            ├── lookbook-2.jpg
+            ├── lookbook-3.jpg
+            ├── lookbook-4.jpg
+            └── about.jpg
+
+  STEP 2 — INSTALL LIVE SERVER IN VS CODE
+  ----------------------------------------
+  1. Open VS Code
+  2. Click Extensions icon (4-square icon on left sidebar)
+     OR press Ctrl+Shift+X (Windows) / Cmd+Shift+X (Mac)
+  3. Search: "Live Server" by Ritwick Dey → click Install
+  4. Open your estrella/ folder: File → Open Folder
+  5. Right-click index.html in the sidebar
+     → "Open with Live Server"
+     OR click "Go Live" at the bottom-right of VS Code
+  6. Browser opens at http://127.0.0.1:5500
+     This is LOCAL ONLY — nobody else can see it
+
+  STEP 3 — HOW TO ADD YOUR IMAGES
+  ---------------------------------
+  Every image placeholder in this file has a comment like:
+    📸 IMAGE: change src="images/YOURFILE.jpg"
+  Just rename the file to match your photo.
+
+  IMAGE TIPS:
+  • Hero image       → landscape, at least 1600×900px
+  • Product cards    → portrait, at least 800×1100px
+  • Lookbook photos  → portrait, at least 700×1000px
+  • About image      → portrait, at least 800×1100px
+  • Use .jpg for photos (smaller files, faster load)
+  • NO SPACES in filenames: use card-1.jpg not card 1.jpg
+  • If image looks blurry → your file is too small
+
+  ================================================================
+  -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Cormorant Garamond = elegant serif for headlines
+       Jost = clean geometric sans for body/labels -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+  NAVIGATION
+  ── Fixed bar always visible at the top ──
+  To change menu links: edit the <a> text and href="#section-id"
+  The href must match the id="" of the section you want to jump to.
+  JS adds a frosted background after 60px of scroll (see main.js).
+  ============================================================ -->
+  <nav class="nav" id="nav">
+    <div class="nav__left">
+      <a href="#collections">Collections</a>
+      <a href="#about">About</a>
+      <a href="#lookbook">Lookbook</a>
+    </div>
+
+    <a class="nav__logo" href="#hero">ESTRELLA</a>
+
+    <div class="nav__right">
+      <a href="#press">Press</a>
+      <a href="#contact">Contact</a>
+      <a href="#" class="nav__bag" aria-label="Shopping bag">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+      </a>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+  HERO SECTION
+  ── Full screen opening with background image ──
+
+  📸 HERO BACKGROUND IMAGE:
+  Open style.css → find the comment "HERO BACKGROUND IMAGE"
+  Change: background-image: url('images/hero.jpg');
+  to your actual file name, e.g. url('images/my-hero-photo.jpg')
+
+  To edit the text below: change the words inside the tags.
+  ============================================================ -->
+  <section class="hero" id="hero">
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content">
+      <span class="hero__eyebrow">SS — 2025</span>
+      <h1 class="hero__title">
+        Dressed<br />
+        <em>in silence.</em>
+      </h1>
+      <p class="hero__sub">Minimal by nature.<br />Deliberate by design.</p>
+      <div class="hero__actions">
+        <a class="btn" href="#collections">Shop Collection</a>
+        <a class="btn btn--ghost" href="#lookbook">View Lookbook</a>
+      </div>
+    </div>
+
+    <div class="hero__line"></div>
+    <div class="hero__scroll">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+  MARQUEE TICKER STRIP
+  ── Slowly scrolling text between sections ──
+  To change text: edit both <span> tags (keep them identical).
+  ============================================================ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>ESTRELLA &nbsp;&mdash;&nbsp; SS 2025 &nbsp;&mdash;&nbsp; NEW ARRIVALS &nbsp;&mdash;&nbsp; FREE SHIPPING OVER $150 &nbsp;&mdash;&nbsp; SLOW FASHION &nbsp;&mdash;&nbsp; LIMITED RUNS &nbsp;&mdash;&nbsp; MADE TO LAST &nbsp;&mdash;&nbsp;</span>
+      <span>ESTRELLA &nbsp;&mdash;&nbsp; SS 2025 &nbsp;&mdash;&nbsp; NEW ARRIVALS &nbsp;&mdash;&nbsp; FREE SHIPPING OVER $150 &nbsp;&mdash;&nbsp; SLOW FASHION &nbsp;&mdash;&nbsp; LIMITED RUNS &nbsp;&mdash;&nbsp; MADE TO LAST &nbsp;&mdash;&nbsp;</span>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+  COLLECTIONS / PRODUCT GRID
+  ── 6 product cards ──
+
+  HOW TO ADD YOUR PRODUCT PHOTOS:
+  Each card has an <img> tag. Change the src="images/card-X.jpg"
+  to match your file name. The onerror attribute shows a grey
+  placeholder automatically if the image file is missing — so
+  the site never breaks.
+
+  HOW TO CHANGE PRODUCT INFO:
+  • Name   → edit text inside <h3 class="card__name">
+  • Price  → edit text inside <span class="card__price">
+  • Sizes  → edit text inside <span class="card__sizes">
+  • Link   → change href="#" to your product page URL
+
+  HOW TO ADD MORE CARDS:
+  Copy any <article class="card">…</article> block and paste it.
+  The grid auto-arranges them (3 columns on desktop).
+
+  HOW TO REMOVE A CARD:
+  Delete the entire <article class="card">…</article> block.
+  ============================================================ -->
+  <section class="collections" id="collections">
+
+    <header class="section-header reveal">
+      <p class="section-eyebrow">New Arrivals</p>
+      <h2 class="section-title">The Collection</h2>
+      <p class="section-sub">Each piece made to outlast the season.</p>
+    </header>
+
+    <div class="grid">
+
+      <!-- CARD 1 ─────────────────────────────────── -->
+      <article class="card reveal">
+        <div class="card__img-wrap">
+          <!-- 📸 IMAGE: change src to your file, e.g. src="images/dress.jpg" -->
+          <img class="card__img" src="images/card-1.jpg" alt="Linen Shift Dress"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag">New</span>
+          <div class="card__hover-label">Quick View</div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Linen Shift Dress</h3>
+          <div class="card__meta">
+            <span class="card__price">$285</span>
+            <span class="card__sizes">XS · S · M · L</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+      <!-- CARD 2 — FEATURED (taller) ──────────────── -->
+      <article class="card card--featured reveal">
+        <div class="card__img-wrap">
+          <!-- 📸 IMAGE: featured card — use your best product photo -->
+          <img class="card__img" src="images/card-2.jpg" alt="Oversized Cotton Blazer"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag card__tag--dark">Bestseller</span>
+          <div class="card__hover-label">Quick View</div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Oversized Cotton Blazer</h3>
+          <div class="card__meta">
+            <span class="card__price">$420</span>
+            <span class="card__sizes">XS · S · M · L · XL</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+      <!-- CARD 3 ─────────────────────────────────── -->
+      <article class="card reveal">
+        <div class="card__img-wrap">
+          <!-- 📸 IMAGE: change src to your file -->
+          <img class="card__img" src="images/card-3.jpg" alt="Tapered Wool Trousers"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag">New</span>
+          <div class="card__hover-label">Quick View</div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Tapered Wool Trousers</h3>
+          <div class="card__meta">
+            <span class="card__price">$195</span>
+            <span class="card__sizes">XS · S · M · L</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+      <!-- CARD 4 ─────────────────────────────────── -->
+      <article class="card reveal">
+        <div class="card__img-wrap">
+          <!-- 📸 IMAGE: change src to your file -->
+          <img class="card__img" src="images/card-4.jpg" alt="Silk Camisole Top"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag">Limited</span>
+          <div class="card__hover-label">Quick View</div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Silk Camisole Top</h3>
+          <div class="card__meta">
+            <span class="card__price">$165</span>
+            <span class="card__sizes">XS · S · M</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+      <!-- CARD 5 — FEATURED (taller) ──────────────── -->
+      <article class="card card--featured reveal">
+        <div class="card__img-wrap">
+          <!-- 📸 IMAGE: second featured card -->
+          <img class="card__img" src="images/card-5.jpg" alt="Cashmere Wrap Coat"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag card__tag--dark">Editor's Pick</span>
+          <div class="card__hover-label">Quick View</div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Cashmere Wrap Coat</h3>
+          <div class="card__meta">
+            <span class="card__price">$680</span>
+            <span class="card__sizes">XS · S · M · L</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+      <!-- CARD 6 ─────────────────────────────────── -->
+      <article class="card reveal">
+        <div class="card__img-wrap">
+          <!-- 📸 IMAGE: change src to your file -->
+          <img class="card__img" src="images/card-6.jpg" alt="Wide-Brim Straw Hat"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag">Accessory</span>
+          <div class="card__hover-label">Quick View</div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Wide-Brim Straw Hat</h3>
+          <div class="card__meta">
+            <span class="card__price">$95</span>
+            <span class="card__sizes">One size</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+    </div><!-- /grid -->
+
+    <div class="collections__cta reveal">
+      <a class="btn btn--outline" href="#">View all pieces</a>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+  ABOUT / BRAND PHILOSOPHY SECTION
+  ── Left = photo, Right = text ──
+
+  📸 ABOUT IMAGE:
+  Change src="images/about.jpg" to your file.
+  Best: editorial portrait, model or lifestyle. 800×1100px+
+
+  To change text: edit the <p> and <h2> tags in the right panel.
+  To change stats: edit the <strong> and <span> inside .about__stat
+  ============================================================ -->
+  <section class="about" id="about">
+
+    <div class="about__img-panel">
+      <!-- 📸 IMAGE: brand / editorial photo -->
+      <img class="about__img" src="images/about.jpg" alt="ESTRELLA brand"
+        onerror="this.style.display='none';this.closest('.about__img-panel').classList.add('about__img-panel--empty')" />
+      <div class="about__img-label">Est. 2020</div>
+    </div>
+
+    <div class="about__text reveal">
+      <p class="section-eyebrow">The Philosophy</p>
+      <h2 class="about__title">
+        Made for those<br />
+        <em>who already know.</em>
+      </h2>
+      <p class="about__body">
+        ESTRELLA was born from a refusal to add noise to the world.
+        Every silhouette is considered, every fabric chosen for its
+        honesty. We make clothes for those who already know who they are.
+      </p>
+      <p class="about__body">
+        Slow production. Limited runs. Worn for decades.
+        No trends — only permanence.
+      </p>
+
+      <div class="about__stats">
+        <div class="about__stat">
+          <strong>100%</strong>
+          <span>Natural fibres</span>
+        </div>
+        <div class="about__stat">
+          <strong>&lt;200</strong>
+          <span>Units per style</span>
+        </div>
+        <div class="about__stat">
+          <strong>5yr</strong>
+          <span>Repair guarantee</span>
+        </div>
+      </div>
+
+      <a class="btn btn--outline" href="#">Our full story</a>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+  PULL QUOTE SECTION
+  ── Full-width editorial text break ──
+  To change the quote: edit the text inside <blockquote>.
+  To change attribution: edit the <p class="pull-quote__attr"> text.
+  ============================================================ -->
+  <section class="quote-section">
+    <blockquote class="pull-quote reveal">&ldquo;Wear less. Wear better.&rdquo;</blockquote>
+    <p class="pull-quote__attr reveal">— Founder, ESTRELLA</p>
+  </section>
+
+
+  <!-- ============================================================
+  LOOKBOOK SECTION
+  ── 4 large editorial photos ──
+
+  📸 LOOKBOOK IMAGES (4 photos total):
+  • lookbook-1.jpg → tall left panel
+  • lookbook-2.jpg → wide center panel (your best shot)
+  • lookbook-3.jpg → tall right panel
+  • lookbook-4.jpg → full-width bottom panel
+
+  Change each src="images/lookbook-X.jpg" to your file names.
+  Portrait orientation recommended. Min 700×1000px each.
+  The full-width bottom image (lookbook-4) can be landscape.
+
+  The center panel (lookbook-2) shows a "Shop the look" label.
+  ============================================================ -->
+  <section class="lookbook" id="lookbook">
+
+    <header class="section-header section-header--centered reveal">
+      <p class="section-eyebrow">Lookbook</p>
+      <h2 class="section-title">SS 2025</h2>
+    </header>
+
+    <div class="lookbook__grid">
+
+      <!-- Lookbook 1 — left tall -->
+      <div class="lookbook__cell lookbook__cell--1 reveal">
+        <!-- 📸 IMAGE: lookbook photo 1 -->
+        <img src="images/lookbook-1.jpg" alt="ESTRELLA lookbook" class="lookbook__img"
+          onerror="this.style.display='none';this.closest('.lookbook__cell').classList.add('lookbook__cell--empty')" />
+      </div>
+
+      <!-- Lookbook 2 — center wide with overlay label -->
+      <div class="lookbook__cell lookbook__cell--2 reveal">
+        <!-- 📸 IMAGE: lookbook photo 2 (main / widest panel) -->
+        <img src="images/lookbook-2.jpg" alt="ESTRELLA lookbook" class="lookbook__img"
+          onerror="this.style.display='none';this.closest('.lookbook__cell').classList.add('lookbook__cell--empty')" />
+        <div class="lookbook__label">
+          <span class="lookbook__label-sub">Season</span>
+          <strong class="lookbook__label-title">SS 2025</strong>
+          <a class="btn btn--ghost-dark" href="#">Shop the look</a>
+        </div>
+      </div>
+
+      <!-- Lookbook 3 — right tall -->
+      <div class="lookbook__cell lookbook__cell--3 reveal">
+        <!-- 📸 IMAGE: lookbook photo 3 -->
+        <img src="images/lookbook-3.jpg" alt="ESTRELLA lookbook" class="lookbook__img"
+          onerror="this.style.display='none';this.closest('.lookbook__cell').classList.add('lookbook__cell--empty')" />
+      </div>
+
+      <!-- Lookbook 4 — full-width bottom banner -->
+      <div class="lookbook__cell lookbook__cell--4 reveal">
+        <!-- 📸 IMAGE: lookbook photo 4 (full-width — landscape works great here) -->
+        <img src="images/lookbook-4.jpg" alt="ESTRELLA lookbook" class="lookbook__img"
+          onerror="this.style.display='none';this.closest('.lookbook__cell').classList.add('lookbook__cell--empty')" />
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+  PRESS SECTION
+  ── "As seen in" logos or names ──
+  To add real logo images: replace each <span class="press__logo">
+  with an <img src="images/logo-vogue.png" alt="Vogue" class="press__logo-img">
+  ============================================================ -->
+  <section class="press" id="press">
+    <p class="press__label reveal">As seen in</p>
+    <div class="press__logos reveal">
+      <span class="press__logo">Vogue</span>
+      <span class="press__logo">Elle</span>
+      <span class="press__logo">Harper's Bazaar</span>
+      <span class="press__logo">Business of Fashion</span>
+      <span class="press__logo">Hypebae</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+  EMAIL / CONTACT SECTION
+  ── Newsletter sign-up ──
+  The form currently just shows a success message (see main.js).
+  To connect to Mailchimp or Klaviyo: replace the <form> block
+  with their embed code, or update handleSubmit() in main.js
+  to POST to their API endpoint.
+  ============================================================ -->
+  <section class="contact" id="contact">
+    <div class="contact__inner reveal">
+      <p class="section-eyebrow">Stay close</p>
+      <h2 class="contact__title">Early access.<br />Nothing else.</h2>
+      <p class="contact__sub">
+        Private sales, new arrivals, and rare restocks —
+        sent directly to those who are in.
+      </p>
+      <form class="contact__form" onsubmit="handleSubmit(event)">
+        <input class="contact__input" type="email" placeholder="your@email.com"
+          required aria-label="Email address" />
+        <button class="btn" type="submit">Join the list</button>
+      </form>
+      <!-- Success message — appears after submit, controlled in main.js -->
+      <p class="contact__confirm" id="formMsg" aria-live="polite"></p>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+  FOOTER
+  ── Bottom of page ──
+  To change footer links: edit the <a> tags in .footer__col blocks.
+  To change social links: change href="#" to your profile URLs.
+  ============================================================ -->
+  <footer class="footer">
+    <div class="footer__top">
+
+      <div class="footer__brand">
+        <span class="footer__logo">ESTRELLA</span>
+        <p class="footer__tagline">Minimal by nature. Deliberate by design.</p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__col">
+          <strong>Shop</strong>
+          <a href="#">New Arrivals</a>
+          <a href="#">Dresses</a>
+          <a href="#">Outerwear</a>
+          <a href="#">Trousers</a>
+          <a href="#">Accessories</a>
+        </div>
+        <div class="footer__col">
+          <strong>Info</strong>
+          <a href="#">About</a>
+          <a href="#">Sustainability</a>
+          <a href="#">Stockists</a>
+          <a href="#">Press</a>
+        </div>
+        <div class="footer__col">
+          <strong>Help</strong>
+          <a href="#">Shipping</a>
+          <a href="#">Returns</a>
+          <a href="#">Sizing Guide</a>
+          <a href="#">Contact</a>
+        </div>
+      </nav>
+
+      <div class="footer__social">
+        <strong>Follow</strong>
+        <!-- Replace # with your actual social profile URLs -->
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" target="_blank" rel="noopener">Pinterest</a>
+        <a href="#" target="_blank" rel="noopener">TikTok</a>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; 2026 ESTRELLA. All rights reserved.</span>
+      <div class="footer__legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Cookie Settings</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS always goes at the bottom of <body> so it loads after the HTML -->
+  <script src="main.js"></script>
+
+</body>
+</html>
