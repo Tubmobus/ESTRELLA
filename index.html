@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESTRELLA</title>
+
+  <!--
+  ================================================================
+  FOLDER STRUCTURE
+  ================================================================
+    estrella/
+      ├── index.html
+      ├── style.css
+      ├── main.js
+      └── images/
+            ├── hero.jpg
+            ├── card-1.jpg  through card-6.jpg
+            ├── lookbook-1.jpg through lookbook-4.jpg
+            └── about.jpg
+
+  ================================================================
+  EMAIL SETUP — READ THIS BEFORE GOING LIVE
+  ================================================================
+  Emails are sent via EmailJS (free, no backend needed).
+  Your target inbox: estrella.bus1n3ss@gmail.com
+
+  STEP 1 — Create a free EmailJS account
+    → https://www.emailjs.com  (free plan: 200 emails/month)
+
+  STEP 2 — Connect your Gmail
+    Dashboard → Email Services → Add New Service
+    → Choose Gmail → connect estrella.bus1n3ss@gmail.com
+    → Copy the Service ID (looks like: service_xxxxxxx)
+
+  STEP 3 — Create an Email Template
+    Dashboard → Email Templates → Create New Template
+    Paste this as the template body:
+
+      From: {{from_name}}
+      Email: {{from_email}}
+      Subject: {{subject}}
+
+      Message:
+      {{message}}
+
+    Set "To email" to: estrella.bus1n3ss@gmail.com
+    Save → copy the Template ID (looks like: template_xxxxxxx)
+
+  STEP 4 — Get your Public Key
+    Dashboard → Account → General → Public Key
+    Copy it (looks like: XXXXXXXXXXXXXXX)
+
+  STEP 5 — Paste your IDs into main.js
+    Open main.js → find the EMAILJS CONFIG section at the top
+    Replace the placeholder strings with your real IDs.
+
+  That's it — emails will arrive at estrella.bus1n3ss@gmail.com
+  ================================================================
+  -->
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- EmailJS SDK — powers the contact form email sending -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Custom cursor dot (animated via JS) -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <!-- Page transition overlay (fades in on load) -->
+  <div class="page-transition" id="pageTransition"></div>
+
+  <!-- ============================================================
+  NAVIGATION
+  Fixed top bar. JS adds .scrolled class after 60px scroll.
+  ============================================================ -->
+  <nav class="nav" id="nav">
+    <div class="nav__left">
+      <a href="#collections" class="nav-link">Collections</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#lookbook" class="nav-link">Lookbook</a>
+    </div>
+
+    <a class="nav__logo" href="#hero" data-text="ESTRELLA">ESTRELLA</a>
+
+    <div class="nav__right">
+      <a href="#press" class="nav-link">Press</a>
+      <a href="#contact" class="nav-link">Contact</a>
+      <a href="#" class="nav__bag" aria-label="Shopping bag">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+      </a>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+  HERO SECTION
+  📸 Background image: set in style.css → search "HERO BACKGROUND IMAGE"
+  ============================================================ -->
+  <section class="hero" id="hero">
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content">
+      <!-- data-scramble triggers a letter-scramble animation on load -->
+      <span class="hero__eyebrow" data-animate="slide-up" data-delay="0">SS — 2025</span>
+
+      <h1 class="hero__title">
+        <span class="hero__word" data-animate="slide-up" data-delay="100">Dressed</span><br />
+        <em class="hero__word" data-animate="slide-up" data-delay="220">in silence.</em>
+      </h1>
+
+      <p class="hero__sub" data-animate="fade" data-delay="500">
+        Minimal by nature.<br />Deliberate by design.
+      </p>
+
+      <div class="hero__actions" data-animate="fade" data-delay="700">
+        <!-- magnetic="true" makes button slightly follow the cursor -->
+        <a class="btn magnetic" href="#collections" magnetic="true">Shop Collection</a>
+        <a class="btn btn--ghost magnetic" href="#lookbook" magnetic="true">View Lookbook</a>
+      </div>
+    </div>
+
+    <!-- Animated counter strip -->
+    <div class="hero__stats">
+      <div class="hero__stat-item">
+        <span class="hero__stat-num" data-count="100">0</span><span>%</span>
+        <span class="hero__stat-label">Natural fibres</span>
+      </div>
+      <div class="hero__stat-divider"></div>
+      <div class="hero__stat-item">
+        <span class="hero__stat-num" data-count="200">0</span><span>+</span>
+        <span class="hero__stat-label">Pieces crafted</span>
+      </div>
+      <div class="hero__stat-divider"></div>
+      <div class="hero__stat-item">
+        <span class="hero__stat-num" data-count="5">0</span><span>yr</span>
+        <span class="hero__stat-label">Repair guarantee</span>
+      </div>
+    </div>
+
+    <div class="hero__line"></div>
+    <div class="hero__scroll">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+  MARQUEE STRIP
+  ============================================================ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>ESTRELLA &nbsp;&mdash;&nbsp; SS 2025 &nbsp;&mdash;&nbsp; NEW ARRIVALS &nbsp;&mdash;&nbsp; FREE SHIPPING OVER $150 &nbsp;&mdash;&nbsp; SLOW FASHION &nbsp;&mdash;&nbsp; LIMITED RUNS &nbsp;&mdash;&nbsp; MADE TO LAST &nbsp;&mdash;&nbsp;</span>
+      <span>ESTRELLA &nbsp;&mdash;&nbsp; SS 2025 &nbsp;&mdash;&nbsp; NEW ARRIVALS &nbsp;&mdash;&nbsp; FREE SHIPPING OVER $150 &nbsp;&mdash;&nbsp; SLOW FASHION &nbsp;&mdash;&nbsp; LIMITED RUNS &nbsp;&mdash;&nbsp; MADE TO LAST &nbsp;&mdash;&nbsp;</span>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+  COLLECTIONS / PRODUCT GRID
+  📸 Change src="images/card-X.jpg" on each card to your photo.
+  ============================================================ -->
+  <section class="collections" id="collections">
+
+    <header class="section-header reveal">
+      <p class="section-eyebrow">New Arrivals</p>
+      <h2 class="section-title split-text">The Collection</h2>
+      <p class="section-sub">Each piece made to outlast the season.</p>
+    </header>
+
+    <div class="grid">
+
+      <article class="card reveal" data-delay="0">
+        <div class="card__img-wrap">
+          <!-- 📸 change src to your file -->
+          <img class="card__img" src="images/card-1.jpg" alt="Shirt 1"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag">New</span>
+          <div class="card__hover-label">Quick View</div>
+          <!-- Shine sweep effect on hover (CSS) -->
+          <div class="card__shine"></div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Shirt 1</h3>
+          <div class="card__meta">
+            <span class="card__price">$285</span>
+            <span class="card__sizes">XS · S · M · L</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+      <article class="card card--featured reveal" data-delay="100">
+        <div class="card__img-wrap">
+          <!-- 📸 featured card — your best product photo -->
+          <img class="card__img" src="images/card-2.jpg" alt="Shirt 2"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag card__tag--dark">Bestseller</span>
+          <div class="card__hover-label">Quick View</div>
+          <div class="card__shine"></div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Shirt 2</h3>
+          <div class="card__meta">
+            <span class="card__price">$25</span>
+            <span class="card__sizes">XS · S · M · L · XL</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-delay="200">
+        <div class="card__img-wrap">
+          <!-- 📸 change src to your file -->
+          <img class="card__img" src="images/card-3.jpg" alt="Shirt 3"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag">New</span>
+          <div class="card__hover-label">Quick View</div>
+          <div class="card__shine"></div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Shirt 3</h3>
+          <div class="card__meta">
+            <span class="card__price">$20</span>
+            <span class="card__sizes">XS · S · M · L</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-delay="0">
+        <div class="card__img-wrap">
+          <!-- 📸 change src to your file -->
+          <img class="card__img" src="images/card-4.jpg" alt="Shirt 4"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag">Limited</span>
+          <div class="card__hover-label">Quick View</div>
+          <div class="card__shine"></div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Shirt 4</h3>
+          <div class="card__meta">
+            <span class="card__price">$20</span>
+            <span class="card__sizes">XS · S · M</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+      <article class="card card--featured reveal" data-delay="100">
+        <div class="card__img-wrap">
+          <!-- 📸 second featured card -->
+          <img class="card__img" src="images/card-5.jpg" alt="Shirt 5"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag card__tag--dark">Editor's Pick</span>
+          <div class="card__hover-label">Quick View</div>
+          <div class="card__shine"></div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Shirt 5</h3>
+          <div class="card__meta">
+            <span class="card__price">$25</span>
+            <span class="card__sizes">XS · S · M · L</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+      <article class="card reveal" data-delay="200">
+        <div class="card__img-wrap">
+          <!-- 📸 change src to your file -->
+          <img class="card__img" src="images/card-6.jpg" alt="Shirt 6"
+            onerror="this.style.display='none';this.parentElement.classList.add('card__img-wrap--empty')" />
+          <span class="card__tag">Accessory</span>
+          <div class="card__hover-label">Quick View</div>
+          <div class="card__shine"></div>
+        </div>
+        <div class="card__body">
+          <h3 class="card__name">Shirt 6</h3>
+          <div class="card__meta">
+            <span class="card__price">$20</span>
+            <span class="card__sizes">One size</span>
+          </div>
+          <a class="card__link" href="#">View piece &rarr;</a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="collections__cta reveal">
+      <a class="btn btn--outline magnetic" href="#" magnetic="true">View all pieces</a>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+  ABOUT SECTION
+  📸 Change src="images/about.jpg" to your photo.
+  ============================================================ -->
+  <section class="about" id="about">
+
+    <div class="about__img-panel reveal-left">
+      <!-- 📸 brand / editorial photo -->
+      <img class="about__img" src="images/about.jpg" alt="ESTRELLA brand"
+        onerror="this.style.display='none';this.closest('.about__img-panel').classList.add('about__img-panel--empty')" />
+      <div class="about__img-label">Est. 2020</div>
+      <!-- Parallax layer inside about image -->
+      <div class="about__img-overlay"></div>
+    </div>
+
+    <div class="about__text reveal-right">
+      <p class="section-eyebrow">The Philosophy</p>
+      <h2 class="about__title split-text">
+        Made for those<br />
+        <em>who already know.</em>
+      </h2>
+      <p class="about__body">
+        ESTRELLA was born from a refusal to add noise to the world.
+        Every silhouette is considered, every fabric chosen for its
+        honesty. We make clothes for those who already know who they are.
+      </p>
+      <p class="about__body">
+        Slow production. Limited runs. Worn for decades.
+        No trends — only permanence.
+      </p>
+
+      <div class="about__stats">
+        <div class="about__stat">
+          <strong class="count-up" data-target="100">0</strong><span class="about__stat-unit">%</span>
+          <span>Natural fibres</span>
+        </div>
+        <div class="about__stat">
+          <strong class="count-up" data-target="200">0</strong><span class="about__stat-unit">+</span>
+          <span>Units per style</span>
+        </div>
+        <div class="about__stat">
+          <strong class="count-up" data-target="5">0</strong><span class="about__stat-unit">yr</span>
+          <span>Repair guarantee</span>
+        </div>
+      </div>
+
+      <a class="btn btn--outline magnetic" href="#" magnetic="true">Our full story</a>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+  PULL QUOTE
+  ============================================================ -->
+  <section class="quote-section">
+    <blockquote class="pull-quote reveal">&ldquo;Wear less. Wear better.&rdquo;</blockquote>
+    <p class="pull-quote__attr reveal">— Founder, ESTRELLA</p>
+  </section>
+
+
+  <!-- ============================================================
+  LOOKBOOK SECTION
+  📸 Change each src="images/lookbook-X.jpg" to your photos.
+  lookbook-2.jpg is the wide center panel — use your best shot.
+  lookbook-4.jpg spans full width at the bottom.
+  ============================================================ -->
+  <section class="lookbook" id="lookbook">
+
+    <header class="section-header section-header--centered reveal">
+      <p class="section-eyebrow">Lookbook</p>
+      <h2 class="section-title split-text">SS 2025</h2>
+    </header>
+
+    <div class="lookbook__grid">
+
+      <div class="lookbook__cell lookbook__cell--1 reveal-left">
+        <!-- 📸 lookbook photo 1 -->
+        <img src="images/lookbook-1.jpg" alt="ESTRELLA lookbook" class="lookbook__img parallax-img"
+          onerror="this.style.display='none';this.closest('.lookbook__cell').classList.add('lookbook__cell--empty')" />
+      </div>
+
+      <div class="lookbook__cell lookbook__cell--2 reveal">
+        <!-- 📸 lookbook photo 2 — main wide panel -->
+        <img src="images/lookbook-2.jpg" alt="ESTRELLA lookbook" class="lookbook__img parallax-img"
+          onerror="this.style.display='none';this.closest('.lookbook__cell').classList.add('lookbook__cell--empty')" />
+        <div class="lookbook__label">
+          <span class="lookbook__label-sub">Season</span>
+          <strong class="lookbook__label-title">SS 2025</strong>
+          <a class="btn btn--ghost-dark magnetic" href="#" magnetic="true">Shop the look</a>
+        </div>
+      </div>
+
+      <div class="lookbook__cell lookbook__cell--3 reveal-right">
+        <!-- 📸 lookbook photo 3 -->
+        <img src="images/lookbook-3.jpg" alt="ESTRELLA lookbook" class="lookbook__img parallax-img"
+          onerror="this.style.display='none';this.closest('.lookbook__cell').classList.add('lookbook__cell--empty')" />
+      </div>
+
+      <div class="lookbook__cell lookbook__cell--4 reveal">
+        <!-- 📸 lookbook photo 4 — full width banner -->
+        <img src="images/lookbook-4.jpg" alt="ESTRELLA lookbook" class="lookbook__img parallax-img"
+          onerror="this.style.display='none';this.closest('.lookbook__cell').classList.add('lookbook__cell--empty')" />
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================
+  PRESS SECTION
+  ============================================================ -->
+  <section class="press" id="press">
+    <p class="press__label reveal">As seen in</p>
+    <div class="press__logos reveal">
+      <span class="press__logo">Vogue</span>
+      <span class="press__logo">Elle</span>
+      <span class="press__logo">Harper's Bazaar</span>
+      <span class="press__logo">Business of Fashion</span>
+      <span class="press__logo">Hypebae</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+  CONTACT SECTION
+  ── Two forms: Newsletter signup + Direct message form ──
+  Emails go to: estrella.bus1n3ss@gmail.com via EmailJS
+  See main.js EMAILJS CONFIG section to enter your IDs.
+  ============================================================ -->
+  <section class="contact" id="contact">
+    <div class="contact__inner">
+
+      <!-- Left: newsletter signup -->
+      <div class="contact__newsletter reveal-left">
+        <p class="section-eyebrow">Stay close</p>
+        <h2 class="contact__title">Early access.<br />Nothing else.</h2>
+        <p class="contact__sub">
+          Private sales, new arrivals, and rare restocks —
+          sent directly to those who are in.
+        </p>
+
+        <form class="contact__form" id="newsletterForm" onsubmit="handleNewsletter(event)">
+          <input class="contact__input" type="email" name="email"
+            placeholder="your@email.com" required aria-label="Email address" />
+          <button class="btn magnetic" type="submit" magnetic="true">Join the list</button>
+        </form>
+        <p class="contact__confirm" id="newsletterMsg" aria-live="polite"></p>
+      </div>
+
+      <!-- Vertical divider -->
+      <div class="contact__divider"></div>
+
+      <!-- Right: direct message form — sends email to estrella.bus1n3ss@gmail.com -->
+      <div class="contact__message reveal-right">
+        <p class="section-eyebrow">Send a message</p>
+        <h2 class="contact__title">Get in touch.</h2>
+        <p class="contact__sub">
+          Questions, press, wholesale, or collaborations —
+          we read everything.
+        </p>
+
+        <!--
+        This form sends to estrella.bus1n3ss@gmail.com via EmailJS.
+        Field names (name, email, subject, message) MUST match
+        the {{variables}} in your EmailJS template exactly.
+        -->
+        <form class="contact__msg-form" id="contactForm" onsubmit="handleContact(event)">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="contactName">Name</label>
+              <input class="form-input" type="text" id="contactName"
+                name="from_name" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactEmail">Email</label>
+              <input class="form-input" type="email" id="contactEmail"
+                name="from_email" placeholder="your@email.com" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contactSubject">Subject</label>
+            <input class="form-input" type="text" id="contactSubject"
+              name="subject" placeholder="What is this about?" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contactMessage">Message</label>
+            <textarea class="form-input form-textarea" id="contactMessage"
+              name="message" placeholder="Your message..." required rows="5"></textarea>
+          </div>
+
+          <button class="btn magnetic" type="submit" id="contactBtn" magnetic="true">Send message</button>
+          <p class="contact__confirm" id="contactMsg" aria-live="polite"></p>
+
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+  FOOTER
+  ============================================================ -->
+  <footer class="footer">
+    <div class="footer__top">
+
+      <div class="footer__brand">
+        <span class="footer__logo">ESTRELLA</span>
+        <p class="footer__tagline">Minimal by nature. Deliberate by design.</p>
+        <!-- Replace # with your real social URLs -->
+        <div class="footer__social-inline">
+          <a href="#" target="_blank" rel="noopener">IG</a>
+          <a href="#" target="_blank" rel="noopener">PI</a>
+          <a href="#" target="_blank" rel="noopener">TK</a>
+        </div>
+      </div>
+
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <div class="footer__col">
+          <strong>Shop</strong>
+          <a href="#">New Arrivals</a>
+          <a href="#">Dresses</a>
+          <a href="#">Outerwear</a>
+          <a href="#">Trousers</a>
+          <a href="#">Accessories</a>
+        </div>
+        <div class="footer__col">
+          <strong>Info</strong>
+          <a href="#">About</a>
+          <a href="#">Sustainability</a>
+          <a href="#">Stockists</a>
+          <a href="#">Press</a>
+        </div>
+        <div class="footer__col">
+          <strong>Help</strong>
+          <a href="#">Shipping</a>
+          <a href="#">Returns</a>
+          <a href="#">Sizing Guide</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+
+      <div class="footer__social">
+        <strong>Follow</strong>
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" target="_blank" rel="noopener">Pinterest</a>
+        <a href="#" target="_blank" rel="noopener">TikTok</a>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; 2025 Estrella. All rights reserved.</span>
+      <div class="footer__legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Use</a>
+        <a href="#">Cookie Settings</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
